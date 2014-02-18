@@ -23,6 +23,9 @@ var ExpressionParser = function (expr) {
 	}
 	
 	// Public Methods
+	// Parsing a mathematical expression
+	// TODO: 1. Add unary operator support like '-123', '10!', etc.
+	// 		 2. The CAP_A through CAP_Z shoudl resolve the cell ptr inside the evaluate handler of the tree
 	this.parse = function () {
 		var expr = this.expression.split(""),
 			token,
