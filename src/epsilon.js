@@ -1,12 +1,13 @@
+"use strict";
 // Extending JS array with top methor looking up the last member
 Array.prototype.top = function () {
 	return this[this.length - 1];
-}
+};
 
 var ZERO = 48,
 	NINE = 57,
 	CAP_A = 65,
-	CAP_Z = 90
+	CAP_Z = 90;
 
 var Calculator = function () {
 	this.exprParser = new ExpressionParser();
@@ -17,15 +18,9 @@ var ExpressionParser = function (expr) {
 	this.operatorStack = [];
 	this.valueStack = [];
 	
-	// Accessors and modifiers
-	this.setExpression = function (expr) {
-		this.expression = expr;
-	}
-	
 	// Public Methods
 	// Parsing a mathematical expression
-	// TODO: 1. Add unary operator support like '-123', '10!', etc.
-	// 		 2. The CAP_A through CAP_Z shoudl resolve the cell ptr inside the evaluate handler of the tree
+	// TODO: 1. The CAP_A through CAP_Z should resolve the cell ptr inside the evaluate handler of the tree
 	this.parse = function () {
 		var expr = this.expression.split(""),
 			token,
@@ -71,12 +66,15 @@ var ExpressionParser = function (expr) {
 		while (this.operatorStack.length) {
 			this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
 		}
-	}
-	
+	};
 	this.evaluate = function () {
 		return this.valueStack[0].evaluate();
-	}
-}
+	};
+	this.value = function () {
+		this.parse();
+		return this.evaluate();
+	};
+};
 
 var ExpressionTree = function (token, left, right) {
 	switch (arguments.length) {
@@ -125,14 +123,14 @@ var ExpressionTree = function (token, left, right) {
 			break;
 		}
 		return this.value();
-	}
+	};
 	this.value = function () {
 		if (typeof this.pointer === "number") {
 			return this.pointer;
 		}
 		if (this.pointer.charCodeAt(0) >= ZERO && this.pointer.charCodeAt(0) <= NINE) {
-			return parseFloat(this.pointer);
+			this.pointer = parseFloat(this.pointer);
 		}
-	}
-}
-
+		return this.pointer;
+	};
+};
