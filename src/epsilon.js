@@ -91,8 +91,8 @@ var ExpressionTree = function (token, left, right) {
 		case 3:
 			this.pointer = null;
 			this.operator = token;
-			this.left = left;
-			this.right = right;
+			this.left = right;
+			this.right = left;
 			break;
 		default:
 			this.pointer = this.left = this.right = this.operator = null;
