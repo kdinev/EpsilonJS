@@ -7,7 +7,8 @@ Array.prototype.top = function () {
 var ZERO = 48,
 	NINE = 57,
 	CAP_A = 65,
-	CAP_Z = 90;
+	CAP_Z = 90,
+	DEC_POINT = 46;
 
 var Calculator = function () {
 	this.exprParser = new ExpressionParser();
@@ -40,23 +41,23 @@ var ExpressionParser = function (expr) {
 				// remove the opening bracket
 				this.operatorStack.pop();
 				valueToken = true;
-			} else if ((token.charCodeAt(0) >= ZERO && token.charCodeAt(0) <= NINE) || (token.charCodeAt(0) >= CAP_A && token.charCodeAt(0) <= CAP_Z)) {
+			} else if ((token.charCodeAt(0) >= ZERO && token.charCodeAt(0) <= NINE) || (token.charCodeAt(0) >= CAP_A && token.charCodeAt(0) <= CAP_Z) || token.charCodeAt(0) === DEC_POINT) {
 				// Token is a number
 				temp.push(token);
-				while (expr.length && ((expr[0].charCodeAt(0) >= ZERO && expr[0].charCodeAt(0) <= NINE) || (expr[0].charCodeAt(0) >= CAP_A && expr[0].charCodeAt(0) <= CAP_Z))) {
+				while (expr.length && ((expr[0].charCodeAt(0) >= ZERO && expr[0].charCodeAt(0) <= NINE) || (expr[0].charCodeAt(0) >= CAP_A && expr[0].charCodeAt(0) <= CAP_Z) || expr[0].charCodeAt(0) === DEC_POINT)) {
 					temp.push(expr.shift());
 				}
 				this.valueStack.push(new ExpressionTree(temp.join("")));
 				valueToken = true;
 			} else if (token === "-" && !valueToken) {
 				// Unary negative operator (negative sign)
-				while (expr.length && ((expr[0].charCodeAt(0) >= ZERO && expr[0].charCodeAt(0) <= NINE) || (expr[0].charCodeAt(0) >= CAP_A && expr[0].charCodeAt(0) <= CAP_Z))) {
+				while (expr.length && ((expr[0].charCodeAt(0) >= ZERO && expr[0].charCodeAt(0) <= NINE) || (expr[0].charCodeAt(0) >= CAP_A && expr[0].charCodeAt(0) <= CAP_Z) || expr[0].charCodeAt(0) === DEC_POINT)) {
 					temp.push(expr.shift());
 				}
 				this.valueStack.push(new ExpressionTree(token, new ExpressionTree(temp.join(""))));
 				valueToken = true;
 			} else if (token === "+" || token === "-" || token === "*" || token === "/") {
-				while (this.operatorStack.length && ((this.operatorStack.top() === "*" || this.operatorStack.top() === "/") || (token === "+" || token === "-"))) {
+				while (this.operatorStack.length && ((this.operatorStack.top() === "*" || this.operatorStack.top() === "/") || ((token === "+" || token === "-")  && (this.operatorStack.top() === '+' || this.operatorStack.top() === '-')))) {
 					this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
 				}
 				this.operatorStack.push(token);
@@ -67,12 +68,17 @@ var ExpressionParser = function (expr) {
 			this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
 		}
 	};
-	this.evaluate = function () {
+	this.value = function () {
 		return this.valueStack[0].evaluate();
 	};
-	this.value = function () {
+	this.evaluate = function () {
 		this.parse();
-		return this.evaluate();
+		return this.value();
+	};
+	this.setExpression = function (e) {
+		this.expression = e;
+		this.operatorStack = [];
+		this.valueStack = [];
 	};
 };
 
@@ -128,7 +134,7 @@ var ExpressionTree = function (token, left, right) {
 		if (typeof this.pointer === "number") {
 			return this.pointer;
 		}
-		if (this.pointer.charCodeAt(0) >= ZERO && this.pointer.charCodeAt(0) <= NINE) {
+		if (this.pointer.charCodeAt(0) >= ZERO && this.pointer.charCodeAt(0) <= NINE || token.charCodeAt(0) === DEC_POINT) {
 			this.pointer = parseFloat(this.pointer);
 		}
 		return this.pointer;
