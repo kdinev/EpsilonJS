@@ -1,3 +1,13 @@
+/*
+	Calculator jQuery UI Widget
+
+	Author: Konstantin Dinev
+	Date: February 2014
+	Dependencies:
+		jQuery (v. 1.6.0+)
+		jQuery UI
+		epsilon.js
+*/
 (function ($) {
 	$.widget("ui.calculator", {
 		_css: {
