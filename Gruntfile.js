@@ -16,10 +16,13 @@ module.exports = function(grunt) {
 				jshintrc: ".jshint",
 				ignores: ["build/*.min.js"]
 			},
-			changed: [],
+			changed: [
+				"src/*.js"
+			],
 			all: [
 				"Gruntfile.js",
-				"src/*.js"
+				"src/*.js",
+				"test/*.js",
 			]
 		},
 		qunit: {

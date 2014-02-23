@@ -87,4 +87,16 @@ test("Operator precedence.", function () {
 	answer = -0.05;
 	e.setExpression(expression);
 	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
+	expression = '0.1-2.26+8*2.1';
+	answer = 14.64;
+	e.setExpression(expression);
+	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
+	expression = '-0.1-(2.26+8)*2.1';
+	answer = -21.646;
+	e.setExpression(expression);
+	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
+	expression = '-0.1/(2.26+8)*2.1';
+	answer = -0.020467836257309944;
+	e.setExpression(expression);
+	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
 });
