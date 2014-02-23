@@ -1,0 +1,30 @@
+.ui-calculator .calc-display-value {
+	text-align: right;
+	border: none;
+}
+
+.ui-calculator .calc-display-value:focus {
+	border: none;
+	outline: none;
+}
+
+.ui-calculator  {
+	border: 1px solid #DDCCDD;
+	width: 200px;
+}
+
+.ui-calculator td {
+	text-align: center;
+}
+
+.ui-calculator td {
+	text-align: center;
+	width: 50px;
+	border: 1px solid #DDCCDD;
+	margin: 2px;
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+
