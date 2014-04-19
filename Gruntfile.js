@@ -16,9 +16,7 @@ module.exports = function(grunt) {
 				jshintrc: ".jshint",
 				ignores: ["build/*.min.js"]
 			},
-			changed: [
-				"src/*.js"
-			],
+			//changed: [],
 			all: [
 				"Gruntfile.js",
 				"src/*.js",
@@ -27,13 +25,24 @@ module.exports = function(grunt) {
 		},
 		qunit: {
 			all: ['test/*.html']
+		},
+		watch: {
+			files: ["**/*.js"],
+			tasks: ["test"],
+			options: {
+				spawn: false
+			}
 		}
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-qunit');
+	grunt.loadNpmTasks("grunt-contrib-uglify");
+	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks("grunt-contrib-qunit");
+	grunt.loadNpmTasks("grunt-contrib-watch");
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint', 'qunit', 'uglify']);
+	
+	// Custom task{s}.
+	grunt.registerTask("test", ["jshint", "qunit"]);
 };
