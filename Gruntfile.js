@@ -7,8 +7,17 @@ module.exports = function(grunt) {
 				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
 			},
 			build: {
-				src: 'src/<%= pkg.name %>.js',
-				dest: 'build/<%= pkg.name %>.min.js'
+				files: {
+					'build/epsilon.min.js': ['src/epsilon.js'],
+					'build/calculator.min.js': ['src/calculator.js']
+				}
+			}
+		},
+		cssmin: {
+			combine: {
+				files: {
+					'build/css/calculator.min.css': ['src/css/calculator.css']
+				}
 			}
 		},
 		jshint: {
@@ -39,9 +48,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-qunit");
 	grunt.loadNpmTasks("grunt-contrib-watch");
+	grunt.loadNpmTasks("grunt-contrib-cssmin");
 
 	// Default task(s).
-	grunt.registerTask('default', ['jshint', 'qunit', 'uglify']);
+	grunt.registerTask('default', ['jshint', 'qunit', 'uglify', 'cssmin']);
 	
 	// Custom task{s}.
 	grunt.registerTask("test", ["jshint", "qunit"]);

@@ -15,7 +15,6 @@
 			displayValue: "calc-display-value"
 		},
 		options: {
-			focused: true,
 			documentKeyboard: true
 		},
 		_create: function() {
@@ -27,8 +26,7 @@
 			}
 		},
 		_render: function () {
-			var html = "<table><tbody>" +
-				"<tr><td colspan='4'><input type='text' class='" + this._css.displayValue + "' value='0' /></td></tr>" +
+			var html = "<table><thead><tr><td colspan='4'><div class='" + this._css.displayValue + "'>0</div></td></tr></thead><tbody>" +
 				"<tr><td>Del</td><td>C</td><td></td><td>/</td></tr>" +
 				"<tr><td>7</td><td>8</td><td>9</td><td>*</td></tr>" +
 				"<tr><td>4</td><td>5</td><td>6</td><td>-</td></tr>" +
@@ -40,16 +38,16 @@
 		_attachEvents: function () {
 			var input = this.element.find('.' + this._css.displayValue),
 				self = this;
-			this.element.on("click", "td", function () {
+			this.element.on("click", "tbody td", function () {
 				var target = $(this),
 					value = target.text(),
-					val = input.val();
+					val = input.text();
 				switch (value) {
 				case '=':
 					self._evaluate();
 					break;
 				case 'C':
-					input.val(0);
+					input.text(0);
 					break;
 				case 'Del':
 					self._delete();
@@ -64,14 +62,12 @@
 				$(document).on("keydown", function (event) {
 					self._handleKeydown(event);
 				});
-				this.element.on("keydown", "." + this._css.displayValue, function (event) {
-					event.preventDefault();
-				});
 			}
 		},
 		_allowedKeys: {
-			"8": 8,
-			"13": 13,
+			"8": "Del",
+			"13": "=",
+			"46": "C",
 			"48": "0",
 			"49": "1",
 			"50": "2",
@@ -103,45 +99,50 @@
 			if (!(event.keyCode in this._allowedKeys)) {
 				return false;
 			}
+			var character = this._allowedKeys[event.keyCode];
+			this._animateButton(this.element.find("tbody td:contains(" + character + ")"));
 			switch (event.keyCode) {
 			case 8:
 				this._delete();
-				this._animateButton(this.element.find("td:contains(Del)"));
-				return false;
+				break;
 			case 13:
 				this._evaluate();
-				this._animateButton(this.element.find("td:contains(=)"));
+				break;
+			case 46:
+				this.element.find('.' + this._css.displayValue).text(0);
 				break;
 			default:
-				var character = this._allowedKeys[event.keyCode];
 				this._input(character);
-				this._animateButton(this.element.find("td:contains(" + character + ")"));
-				return false;
+				break;
 			}
 		},
 		_evaluate: function () {
 			var input = this.element.find('.' + this._css.displayValue),
-				value = input.val(),
+				value = input.text(),
 				parser = new ExpressionParser(value);
-			input.val(parser.evaluate());
+			input.text(parser.evaluate());
 		},
 		_delete: function () {
 			var input = this.element.find('.' + this._css.displayValue),
-				val = input.val();
+				val = input.text();
+			if (val.length === 1) {
+				val = '0';
+				input.text(0);
+			}
 			if (val !== '0') {
-				input.val(val.substring(0, val.length - 1));
+				input.text(val.substring(0, val.length - 1));
 			}
 		},
 		_input: function (value) {
 			var input = this.element.find('.' + this._css.displayValue),
-				val = input.val();
+				val = input.text();
 			if (value === ".") {
-				input.val(val + value);
+				input.text(val + value);
 			} else {
 				if (val === '0') {
-					input.val(value);
+					input.text(value);
 				} else {
-					input.val(val + value);
+					input.text(val + value);
 				}
 			}
 		},
