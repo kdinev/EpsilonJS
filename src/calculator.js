@@ -17,7 +17,9 @@
 		options: {
 			documentKeyboard: true
 		},
+		_parser: null,
 		_create: function() {
+			this._parser = new ExpressionParser();
 			this._render();
 			this._attachEvents();
 			this.element.addClass(this._css.calculator);
@@ -119,8 +121,17 @@
 		_evaluate: function () {
 			var input = this.element.find('.' + this._css.displayValue),
 				value = input.text(),
-				parser = new ExpressionParser(value);
-			input.text(parser.evaluate());
+				result;
+			this._parser.setExpression(value);
+			try {
+				result = this._parser.evaluate();
+			} catch (e) {
+				result = "ERROR!";
+			}
+			if (isNaN(result)) {
+				result = "ERROR!";
+			}
+			input.text(result);
 		},
 		_delete: function () {
 			var input = this.element.find('.' + this._css.displayValue),
