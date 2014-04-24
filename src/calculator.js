@@ -11,18 +11,19 @@
 (function ($) {
 	$.widget("ui.calculator", {
 		_css: {
-			calculator: "ui-calculator",
+			calculator: "ui-widget ui-calculator",
 			displayValue: "calc-display-value"
 		},
 		options: {
-			focused: true
+			focused: true,
+			documentKeyboard: true
 		},
 		_create: function() {
 			this._render();
 			this._attachEvents();
 			this.element.addClass(this._css.calculator);
 			if (this.options.focused) {
-				this.element.find(this._css.displayValue).focus();
+				this.element.find("." + this._css.displayValue).focus();
 			}
 		},
 		_render: function () {
@@ -50,44 +51,104 @@
 				case 'C':
 					input.val(0);
 					break;
-				case '.':
-					input.val(val + value);
-					break;
 				case 'Del':
-					if (val !== '0') {
-						input.val(val.substring(0, val.length - 1));
-					}
+					self._delete();
 					break;
 				default:
-					if (input.val() === '0') {
-						input.val(value);
-					} else {
-						input.val(val + value);
-					}
+					self._input(value);
 					break;
 				}
-				target.animate({"background-color": "#AFEEEE"}, 150, function () {
-					target.animate({"background-color": "#FFF"}, 150);
+				self._animateButton(target);
+			});
+			if (this.options.documentKeyboard) {
+				$(document).on("keydown", function (event) {
+					self._handleKeydown(event);
 				});
-			});
-			this.element.on("mouseover", "td", function () {
-				var target = $(this);
-				if (target.text() !== '') {
-					target.animate({"border-color": "#FFA500"}, 150);
-				}
-			});
-			this.element.on("mouseout", "td", function () {
-				var target = $(this);
-				if (target.text() !== '') {
-					target.animate({"border-color": "#DDCCDD"}, 150);
-				}
-			});
+				this.element.on("keydown", "." + this._css.displayValue, function (event) {
+					event.preventDefault();
+				});
+			}
+		},
+		_allowedKeys: {
+			"8": 8,
+			"13": 13,
+			"48": "0",
+			"49": "1",
+			"50": "2",
+			"51": "3",
+			"52": "4",
+			"53": "5",
+			"54": "6",
+			"55": "7",
+			"56": "8",
+			"57": "9",
+			"96": "0",
+			"97": "1",
+			"98": "2",
+			"99": "3",
+			"100": "4",
+			"101": "5",
+			"102": "6",
+			"103": "7",
+			"104": "8",
+			"105": "9",
+			"106": "*",
+			"107": "+",
+			"109": "-",
+			"110": ".",
+			"111": "/",
+			"190": "."
+		},
+		_handleKeydown: function (event) {
+			if (!(event.keyCode in this._allowedKeys)) {
+				return false;
+			}
+			switch (event.keyCode) {
+			case 8:
+				this._delete();
+				this._animateButton(this.element.find("td:contains(Del)"));
+				return false;
+			case 13:
+				this._evaluate();
+				this._animateButton(this.element.find("td:contains(=)"));
+				break;
+			default:
+				var character = this._allowedKeys[event.keyCode];
+				this._input(character);
+				this._animateButton(this.element.find("td:contains(" + character + ")"));
+				return false;
+			}
 		},
 		_evaluate: function () {
 			var input = this.element.find('.' + this._css.displayValue),
 				value = input.val(),
 				parser = new ExpressionParser(value);
 			input.val(parser.evaluate());
+		},
+		_delete: function () {
+			var input = this.element.find('.' + this._css.displayValue),
+				val = input.val();
+			if (val !== '0') {
+				input.val(val.substring(0, val.length - 1));
+			}
+		},
+		_input: function (value) {
+			var input = this.element.find('.' + this._css.displayValue),
+				val = input.val();
+			if (value === ".") {
+				input.val(val + value);
+			} else {
+				if (val === '0') {
+					input.val(value);
+				} else {
+					input.val(val + value);
+				}
+			}
+		},
+		_animateButton: function (target) {
+			target.animate({"background-color": "#FFC500"}, 150, function () {
+				target.animate({"background-color": "#FFF"}, 150);
+			});
 		},
 		_destroy: function() {
 			this.element.off();

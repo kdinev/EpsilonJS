@@ -8,6 +8,10 @@
 	outline: none;
 }
 
+.ui-calculator .calc-display-value::-ms-clear {
+	display: none;
+}
+
 .ui-calculator  {
 	border: 1px solid #DDCCDD;
 	width: 200px;
@@ -16,11 +20,16 @@
 .ui-calculator td {
 	text-align: center;
 	width: 50px;
+	height: 30px;
 	border: 1px solid #DDCCDD;
 	margin: 2px;
 	-webkit-user-select: none; /* Chrome/Safari */        
 	-moz-user-select: none; /* Firefox */
 	-ms-user-select: none; /* IE10+ */
+	-webkit-transition: border-color 0.2s;
+	transition: border-color 0.2s;
 }
 
-
+.ui-calculator td:hover {
+	border: 1px solid #FFC500;
+}

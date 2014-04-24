@@ -1,0 +1,26 @@
+{
+  "name": "EpsilonJS",
+  "version": "0.1.0",
+  "homepage": "https://github.com/kdinev/EpsilonJS",
+  "authors": [
+    "kdinev <kdinev@mail.bw.edu>"
+  ],
+  "description": "Calculator library for basic and complex expressions including DOM reference members.",
+  "main": "epsilon.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "calculator",
+    "expression",
+    "parser"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
