@@ -20,7 +20,7 @@ Supported operators:
  * Negative values (-)
  * Brackets (())
 
-The epsilon expression parser handles DOM formula references as well. The epsilon expression parser will evaluate all elements containing a `data-formula` attribute. In order to get the DOM evaluated the global `epsilon()` method needs to be called after loading the DOM. The references need to be like excel cells (e.g. `A10`, `C2`) and will be looked-up by `id` and by `data-formula-ref` attribute if not found by `id`.
+The epsilon expression parser handles DOM formula references as well. The epsilon expression parser will evaluate all elements containing a `data-formula` attribute. In order to get the DOM evaluated the global `epsilon()` method needs to be called after loading the DOM. The references need to be like excel cells (e.g. `A10`, `C2`) and will be looked-up by `id` and by `data-formula-ref` attribute if not found by `id`. The referenced elements can contain and formula and epsilon will evaluate them according to their `data-formula`. Circular references are not handled at this point and will result in out of stack space exception.
 
 Example:
 
@@ -36,6 +36,25 @@ The result will be:
 
  * 10
  * 20
+
+Epsilon can evaluate only specific DOM elements as well and can be invoked at any point for those elements. If the reference elements contain formulas, then their formulas will be evaluated as part of the requested element's formula but their DOM values will not be changed.
+
+Example:
+
+    <ul>
+        <li id="A1">10</li> <!-- <li data-formula-ref="A1">10</li> -->
+        <li id="A2" data-formula="=A1*2"></li>
+        <li id="A3" data-formula="=A2+5"></li>
+    </ul>
+    <script type="text/javascript">
+        epsilon(document.getElementById("A3"));
+    </script>
+
+The result will be:
+
+ * 10
+ * 
+ * 25
 
 There is also a jQuery UI epsilon calculator widget provided by `calculator.js`. This widget was created to test the epsilon expression parser. The calculator widget is dependent on jQuery and jQuery UI. In order to use it:
     
