@@ -19,3 +19,21 @@ Supported operators:
  * Division (/)
  * Negative values (-)
  * Brackets (())
+
+The epsilon expression parser handles DOM formula references as well. The epsilon expression parser will evaluate all elements containing a `data-formula` attribute. In order to get the DOM evaluated the global `epsilon()` method needs to be called after loading the DOM. The references need to be like excel cells (e.g. `A10`, `C2`) and will be looked-up by `id` and by `data-formula-ref` attribute if not found by `id`.
+
+Example:
+
+    <ul>
+        <li id="A1">10</li> <!-- <li data-formula-ref="A1">10</li> -->
+        <li data-formula="=A1*2"></li>
+    </ul>
+    <script type="text/javascript">
+        epsilon();
+    </script>
+    
+The result will be:
+
+ * 10
+ * 20
+
