@@ -163,10 +163,14 @@ var ExpressionTree = function (token, left, right) {
 	};
 };
 
-var epsilon = function () {
+var epsilon = function (els) {
 	var parser = new ExpressionParser(),
-		elements = document.querySelectorAll("[data-formula]"),
+		elements = els || document.querySelectorAll("[data-formula]"),
 		i;
+	// A single DOM element is provided as an argument.
+	if (elements && !elements.length) {
+		elements = [elements];
+	}
 	for (i = 0; elements && i < elements.length; i++) {
 		elements[i].innerText = parser.evaluate(elements[i].getAttribute("data-formula"));
 	}
