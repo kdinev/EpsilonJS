@@ -14,12 +14,81 @@
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("#calculator").calculator();
+			
+			epsilon();
 		});
 	</script>
+	
+	<style type="text/css">
+		.calc-window {
+			width: 250px;
+		}
+		
+		.sample-sheet {
+			width: 100%;
+		}
+		.sample-sheet td {
+			text-align: right;
+			border: 1px solid #DDCCDD;
+		}
+		
+		.sample-sheet tr td:first-child {
+			width: 20px;
+			text-align center;
+		}
+	</style>
 </head>
 
 <body>
-	<div id="calculator"></div>
+	<div id="calculator" class="calc-window"></div>
+	<table class="sample-sheet">
+		<thead>
+			<tr>
+				<th></th>
+				<th>A</th>
+				<th>B</th>
+				<th>C</th>
+				<th>D</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td id="A1">1</td>
+				<td id="B1">1</td>
+				<td id="C1">2</td>
+				<td id="D1">3</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td id="A2">12</td>
+				<td id="B2">3</td>
+				<td id="C2">43.2</td>
+				<td id="D2">-12.2</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td id="A3">85</td>
+				<td id="B3">-34</td>
+				<td id="C3">34</td>
+				<td id="D3">43.1</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td id="A4">-5.6</td>
+				<td data-formula-ref="B4">6.754</td>
+				<td>23</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td data-formula="=A1+A2+A3+A4"></td>
+				<td data-formula="=B4+B1"></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 	
 </html>

@@ -25,19 +25,20 @@
 	transition: border-color 0.2s;
 }
 
-.ui-calculator td:hover {
+.ui-calculator tbody td:hover {
 	border: 1px solid #FFC500;
 }
 
-@media screen and (min-width: 500px) {
+/* @media screen and (min-width: 400px) {
 	.ui-calculator td {
-		font-size: 2em;
+		font-size: 1em;
+		height: 30px;
 	}
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 800px) {
 	.ui-calculator td {
 		font-size: 3em;
 		height: 100px;
 	}
-}
+} */

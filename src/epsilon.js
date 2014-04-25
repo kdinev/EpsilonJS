@@ -1,3 +1,4 @@
+/* global document: false */
 "use strict";
 // Extending JS array with top methor looking up the last member
 Array.prototype.top = function () {
@@ -9,10 +10,6 @@ var ZERO = 48,
 	CAP_A = 65,
 	CAP_Z = 90,
 	DEC_POINT = 46;
-
-var Calculator = function () {
-	this.exprParser = new ExpressionParser();
-};
 
 var ExpressionParser = function (expr) {
 	this.expression = expr;
@@ -71,7 +68,10 @@ var ExpressionParser = function (expr) {
 	this.value = function () {
 		return this.valueStack[0].evaluate();
 	};
-	this.evaluate = function () {
+	this.evaluate = function (e) {
+		if (arguments.length) {
+			this.setExpression(e);
+		}
 		this.parse();
 		return this.value();
 	};
@@ -134,9 +134,40 @@ var ExpressionTree = function (token, left, right) {
 		if (typeof this.pointer === "number") {
 			return this.pointer;
 		}
-		if (this.pointer.charCodeAt(0) >= ZERO && this.pointer.charCodeAt(0) <= NINE || token.charCodeAt(0) === DEC_POINT) {
+		if (this.pointer.charCodeAt(0) >= ZERO && this.pointer.charCodeAt(0) <= NINE || this.pointer.charCodeAt(0) === DEC_POINT) {
 			this.pointer = parseFloat(this.pointer);
+		} else if (this.pointer.charCodeAt(0) >= CAP_A && this.pointer.charCodeAt(0) <= CAP_Z) {
+			this.pointer = this.getDomVal();
 		}
 		return this.pointer;
 	};
+	this.getDomVal = function () {
+		var el = document.getElementById(this.pointer);
+		if (!el) {
+			el = document.querySelector("[data-formula-ref='" + this.pointer + "']");
+			if (el && el.length > 1) {
+				el = el[0];
+			}
+		}
+		return this.getElementValue(el);
+	};
+	this.getElementValue = function (el) {
+		var val, parser;
+		if (el && el.getAttribute("data-formula")) {
+			parser = new ExpressionParser(el.getAttribute("data-formula"));
+			val = parser.evaluate();
+		} else if (el) {
+			val = el.innerText;
+		}
+		return parseFloat(val);
+	};
+};
+
+var epsilon = function () {
+	var parser = new ExpressionParser(),
+		elements = document.querySelectorAll("[data-formula]"),
+		i;
+	for (i = 0; elements && i < elements.length; i++) {
+		elements[i].innerText = parser.evaluate(elements[i].getAttribute("data-formula"));
+	}
 };
