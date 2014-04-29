@@ -145,9 +145,6 @@ var ExpressionTree = function (token, left, right) {
 		var el = document.getElementById(this.pointer);
 		if (!el) {
 			el = document.querySelector("[data-formula-ref='" + this.pointer + "']");
-			if (el && el.length > 1) {
-				el = el[0];
-			}
 		}
 		return this.getElementValue(el);
 	};
