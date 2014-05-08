@@ -1,6 +1,6 @@
 /* global document: false */
 "use strict";
-// Extending JS array with top methor looking up the last member
+// Extending JS array with top method looking up the last member
 Array.prototype.top = function () {
 	return this[this.length - 1];
 };
