@@ -122,6 +122,7 @@
 			var input = this.element.find('.' + this._css.displayValue),
 				value = input.text(),
 				result;
+			this._clear = true;
 			this._parser.setExpression(value);
 			try {
 				result = this._parser.evaluate();
@@ -147,14 +148,19 @@
 		_input: function (value) {
 			var input = this.element.find('.' + this._css.displayValue),
 				val = input.text();
-			if (value === ".") {
-				input.text(val + value);
+			switch (value) {
+			case "+":
+			case "-":
+			case "*":
+			case "/":
+				this._clear = false;
+				break;
+			}
+			if ((val !== "." && val === "0") || this._clear) {
+				this._clear = false;
+				input.text(value);
 			} else {
-				if (val === '0') {
-					input.text(value);
-				} else {
-					input.text(val + value);
-				}
+				input.text(val + value);
 			}
 		},
 		_animateButton: function (target) {
