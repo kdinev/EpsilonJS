@@ -28,7 +28,7 @@
 			}
 		},
 		_render: function () {
-			var html = "<table><thead><tr><td colspan='4'><div class='" + this._css.displayValue + "'>0</div></td></tr></thead><tbody>" +
+			var html = "<table><thead><tr><td colspan='4' class='" + this._css.displayValue + "'>0</td></tr></thead><tbody>" +
 				"<tr><td>Del</td><td>C</td><td></td><td>/</td></tr>" +
 				"<tr><td>7</td><td>8</td><td>9</td><td>*</td></tr>" +
 				"<tr><td>4</td><td>5</td><td>6</td><td>-</td></tr>" +
@@ -164,7 +164,7 @@
 			}
 		},
 		_animateButton: function (target) {
-			target.animate({"background-color": "#FFC500"}, 150, function () {
+			target.stop(true, true).animate({"background-color": "#FFC500"}, 150, function () {
 				target.animate({"background-color": "#FFF"}, 150);
 			});
 		},

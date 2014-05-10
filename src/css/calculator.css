@@ -1,11 +1,11 @@
 .ui-calculator .calc-display-value {
 	text-align: right;
-	border: none;
-	width: 99%;
+	padding: 0 2px 0 2px;
 }
 
 .ui-calculator  {
 	border: 1px solid #DDCCDD;
+	height: 100%;
 }
 
 .ui-calculator table  {
@@ -27,6 +27,10 @@
 
 .ui-calculator tbody td:hover {
 	border: 1px solid #FFC500;
+}
+
+.ui-calculator thead td {
+	font-size: 1.25em;
 }
 
 /* @media screen and (min-width: 400px) {
