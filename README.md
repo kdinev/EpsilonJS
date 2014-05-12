@@ -64,3 +64,5 @@ There is also a jQuery UI epsilon calculator widget provided by `calculator.js`.
 			$("#calculator").calculator();
 		});
 	</script>
+
+The calculator widget is used in a Windows 8.1 store application which you may download and play with here: [http://apps.microsoft.com/windows/app/epsilon-calculator/ec41ebdd-00c6-4654-a2a2-b297a0118a87](http://apps.microsoft.com/windows/app/epsilon-calculator/ec41ebdd-00c6-4654-a2a2-b297a0118a87)
