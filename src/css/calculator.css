@@ -1,6 +1,7 @@
 .ui-calculator .calc-display-value {
 	text-align: right;
 	padding: 0 2px 0 2px;
+	color: #000;
 }
 
 .ui-calculator  {
@@ -14,6 +15,7 @@
 
 .ui-calculator td {
 	text-align: center;
+	color: #606060;
 	width: 80px;
 	height: 30px;
 	border: 1px solid #DDCCDD;
