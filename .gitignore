@@ -3,6 +3,7 @@ src/test.html
 
 #packages
 node_modules/
+bower_components/
 
 #buildzone
 build/
