@@ -3,20 +3,12 @@
 
 <head>
 	<title>EpsilonJS Calculator</title>
-	<link type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="../src/css/calculator.css" rel="stylesheet" />
-	
-	<script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="../src/epsilon.js"></script>
-	<script type="text/javascript" src="../src/calculator.js"></script>
 	
 	<script type="text/javascript">
-		$(document).ready(function () {
-			$("#calculator").calculator();
-			
+		window.onload = function () {
 			epsilon();
-		});
+		};
 	</script>
 	
 	<style type="text/css">

@@ -8,15 +8,7 @@ module.exports = function(grunt) {
 			},
 			build: {
 				files: {
-					'build/epsilon.min.js': ['src/epsilon.js'],
-					'build/calculator.min.js': ['src/calculator.js']
-				}
-			}
-		},
-		cssmin: {
-			combine: {
-				files: {
-					'build/css/calculator.min.css': ['src/css/calculator.css']
+					'build/epsilon.min.js': ['src/epsilon.js']
 				}
 			}
 		},
@@ -51,7 +43,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
 
 	// Default task(s).
-	grunt.registerTask('default', ['jshint', 'qunit', 'uglify', 'cssmin']);
+	grunt.registerTask('default', ['jshint', 'qunit', 'uglify']);
 	
 	// Custom task{s}.
 	grunt.registerTask("test", ["jshint", "qunit"]);
