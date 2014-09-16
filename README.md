@@ -56,7 +56,7 @@ The result will be:
  * 
  * 25
 
-There is also a jQuery UI epsilon calculator widget provided by `calculator.js`. This widget was created to test the epsilon expression parser. The calculator widget is dependent on jQuery and jQuery UI. In order to use it:
+There is also a jQuery UI epsilon calculator widget provided by [https://github.com/kdinev/calculatorjs](https://github.com/kdinev/calculatorjs). This widget was created to test the epsilon expression parser. The calculator widget is dependent on jQuery and jQuery UI. In order to use it:
     
     <div id="calculator"></div>
     <script type="text/javascript">
