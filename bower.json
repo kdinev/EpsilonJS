@@ -6,7 +6,7 @@
     "kdinev <kdinev@mail.bw.edu>"
   ],
   "description": "Calculator library for basic and complex expressions including DOM reference members.",
-  "main": "epsilon.js",
+  "main": "src/epsilon.js",
   "moduleType": [
     "globals"
   ],
@@ -25,6 +25,12 @@
     "tests"
   ],
   "devDependencies": {
+	"grunt": "~0.4.4",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-qunit": "~0.4.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-cssmin": "~0.9.0"
     "jquery": "~2.1.1",
     "qunit": "~1.14.0"
   }
