@@ -8,7 +8,7 @@ Description:
 Parses and evaluates mathematical expressions. The expression is provided to the expression parser as a string.
 
     var expr = "1/(2+8)*2",
-        parser = new ExpressionParser(expr);
+        parser = new Epsilon.ExpressionParser(expr);
     parser.evaluate(); // Yeilds 0.2 as a number type
     
 Supported operators:
@@ -20,7 +20,7 @@ Supported operators:
  * Negative values (-)
  * Brackets (())
 
-The epsilon expression parser handles DOM formula references as well. The epsilon expression parser will evaluate all elements containing a `data-formula` attribute. In order to get the DOM evaluated the global `epsilon()` method needs to be called after loading the DOM. The references need to be like excel cells (e.g. `A10`, `C2`) and will be looked-up by `id` and by `data-formula-ref` attribute if not found by `id`. The referenced elements can contain and formula and epsilon will evaluate them according to their `data-formula`. Circular references are not handled at this point and will result in out of stack space exception.
+The epsilon expression parser handles DOM formula references as well. The epsilon expression parser will evaluate all elements containing a `data-formula` attribute. In order to get the DOM evaluated the `Epsilon.epsilon()` method needs to be called after loading the DOM. The references need to be like excel cells (e.g. `A10`, `C2`) and will be looked-up by `id` and by `data-formula-ref` attribute if not found by `id`. The referenced elements can contain and formula and epsilon will evaluate them according to their `data-formula`. Circular references are not handled at this point and will result in out of stack space exception.
 
 Example:
 
@@ -29,7 +29,7 @@ Example:
         <li data-formula="=A1*2"></li>
     </ul>
     <script type="text/javascript">
-        epsilon();
+        Epsilon.epsilon();
     </script>
     
 The result will be:
@@ -47,7 +47,7 @@ Example:
         <li id="A3" data-formula="=A2+5"></li>
     </ul>
     <script type="text/javascript">
-        epsilon(document.getElementById("A3"));
+        Epsilon.epsilon(document.getElementById("A3"));
     </script>
 
 The result will be:

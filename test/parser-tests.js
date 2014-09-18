@@ -3,11 +3,11 @@ module("Expression Parser");
 test("Single value expression", function () {
 	var expression = '1',
 		answer = 1,
-		e = new ExpressionParser(expression);
+		e = new Epsilon.ExpressionParser(expression);
 	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
 	expression = '-1';
 	answer = -1;
-	e = new ExpressionParser(expression);
+	e = new Epsilon.ExpressionParser(expression);
 	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
 	expression = '-0.21';
 	answer = -0.21;
@@ -30,7 +30,7 @@ test("Single value expression", function () {
 test("Basic expressions", function () {
 	var expression = '1+2',
 		answer = 3,
-		e = new ExpressionParser(expression);
+		e = new Epsilon.ExpressionParser(expression);
 	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
 	expression = '1-2';
 	answer = -1;
@@ -65,7 +65,7 @@ test("Basic expressions", function () {
 test("Operator precedence.", function () {
 	var expression = '1+2*10-6',
 		answer = 15,
-		e = new ExpressionParser(expression);
+		e = new Epsilon.ExpressionParser(expression);
 	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
 	expression = '1-2+8*2';
 	answer = 15;
@@ -113,7 +113,7 @@ TestModule.renderDom = function () {
 module("DOM reference parser", {
 	setup: function () {
 		TestModule.renderDom();
-		epsilon();
+		Epsilon.epsilon();
 	},
 	teardown: function () {
 		var node = document.getElementById("testContainer");
@@ -131,7 +131,7 @@ test("DOM references and chained formulas.", function () {
 module("DOM reference parser - restricted subset", {
 	setup: function () {
 		TestModule.renderDom();
-		epsilon(document.getElementById("A3"));
+		Epsilon.epsilon(document.getElementById("A3"));
 	},
 	teardown: function () {
 		var node = document.getElementById("testContainer");
