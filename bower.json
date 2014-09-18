@@ -1,6 +1,6 @@
 {
   "name": "EpsilonJS",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/kdinev/EpsilonJS",
   "authors": [
     "kdinev <kdinev@mail.bw.edu>"
@@ -12,7 +12,7 @@
   ],
   "keywords": [
     "calculator",
-	"calc engine",
+    "calc engine",
     "expression",
     "parser"
   ],
