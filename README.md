@@ -3,7 +3,28 @@ EpsilonJS
 
 A JavaScript calculator and an expression parser.
 
-Description:
+How to build EpsilonJS
+=========
+
+Clone the repo:
+
+    git clone https://github.com/kdinev/EpsilonJS.git
+    
+Install the grunt client:
+
+    npm install -g grunt-cli
+    
+Go to the EpsilonJS folder and install dependencies:
+
+    cd epsilonjs
+    npm install
+    
+Build:
+
+    grunt default
+
+Description
+=========
 
 Parses and evaluates mathematical expressions. The expression is provided to the expression parser as a string.
 
