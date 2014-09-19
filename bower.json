@@ -6,7 +6,7 @@
     "kdinev <kdinev@mail.bw.edu>"
   ],
   "description": "Calculator library for basic and complex expressions including DOM reference members.",
-  "main": "src/epsilon.js",
+  "main": "build/epsilon.min.js",
   "moduleType": [
     "globals"
   ],
