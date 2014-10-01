@@ -131,7 +131,7 @@ test("DOM references and chained formulas.", function () {
 module("DOM reference parser - restricted subset", {
 	setup: function () {
 		TestModule.renderDom();
-		Epsilon.epsilon(document.getElementById("A3"));
+		Epsilon.epsilon([document.getElementById("A3")]);
 	},
 	teardown: function () {
 		var node = document.getElementById("testContainer");

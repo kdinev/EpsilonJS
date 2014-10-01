@@ -1,17 +1,24 @@
+interface Array<T> {
+    top(): T;
+}
+
 Array.prototype.top = function () {
-    return this[this.length - 1];
+	return this[this.length - 1];
 };
 
-var Epsilon;
-(function (Epsilon) {
-    var ZERO = 48, NINE = 57, CAP_A = 65, CAP_Z = 90, DEC_POINT = 46;
+module Epsilon {
+    var ZERO = 48,
+        NINE = 57,
+        CAP_A = 65,
+        CAP_Z = 90,
+        DEC_POINT = 46;
 
-    var ExpressionTree = (function () {
-        function ExpressionTree(token, left, right) {
-            this.pointer = null;
-            this.left = null;
-            this.right = null;
-            this.operator = null;
+    export class ExpressionTree {
+        pointer = null;
+        left = null;
+        right = null;
+        operator = null;
+        constructor(token: any, left?: ExpressionTree, right?: ExpressionTree) {
             switch (arguments.length) {
                 case 1:
                     this.pointer = token;
@@ -34,7 +41,8 @@ var Epsilon;
                     break;
             }
         }
-        ExpressionTree.prototype.evaluate = function () {
+
+        evaluate(): number {
             if (this.left && this.left.operator) {
                 this.left.evaluate();
             }
@@ -58,9 +66,9 @@ var Epsilon;
                     break;
             }
             return this.value();
-        };
+        }
 
-        ExpressionTree.prototype.value = function () {
+        value(): number {
             if (typeof this.pointer === "number") {
                 return this.pointer;
             }
@@ -70,17 +78,17 @@ var Epsilon;
                 this.pointer = this.getDomVal();
             }
             return this.pointer;
-        };
+        }
 
-        ExpressionTree.prototype.getDomVal = function () {
+        getDomVal(): number {
             var el = document.getElementById(this.pointer);
             if (!el) {
-                el = document.querySelector("[data-formula-ref='" + this.pointer + "']");
+                el = <HTMLElement>document.querySelector("[data-formula-ref='" + this.pointer + "']");
             }
             return this.getElementValue(el);
-        };
+        }
 
-        ExpressionTree.prototype.getElementValue = function (el) {
+        getElementValue(el: HTMLElement): number {
             var val, parser;
             if (el && el.getAttribute("data-formula")) {
                 parser = new ExpressionParser(el.getAttribute("data-formula"));
@@ -89,20 +97,20 @@ var Epsilon;
                 val = el.innerText;
             }
             return parseFloat(val);
-        };
-        return ExpressionTree;
-    })();
-    Epsilon.ExpressionTree = ExpressionTree;
-    var ExpressionParser = (function () {
-        function ExpressionParser(expr) {
-            this.expr = expr;
-            this.expression = null;
-            this.operatorStack = [];
-            this.valueStack = [];
+        }
+    }
+    export class ExpressionParser {
+        expression = null;
+        operatorStack = [];
+        valueStack = [];
+        constructor(public expr?: string) {
             this.expression = expr;
         }
-        ExpressionParser.prototype.parse = function () {
-            var expr = this.expression.split(""), token, temp, valueToken = false;
+        parse() {
+            var expr = this.expression.split(""),
+                token,
+                temp,
+                valueToken = false;
             while (expr.length) {
                 token = expr.shift();
                 temp = [];
@@ -111,12 +119,14 @@ var Epsilon;
                     valueToken = false;
                 } else if (token === ")") {
                     while (this.operatorStack.top() !== "(") {
+                        // Push a new node on the value stack
                         this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
                     }
-
+                    // remove the opening bracket
                     this.operatorStack.pop();
                     valueToken = true;
                 } else if ((token.charCodeAt(0) >= ZERO && token.charCodeAt(0) <= NINE) || (token.charCodeAt(0) >= CAP_A && token.charCodeAt(0) <= CAP_Z) || token.charCodeAt(0) === DEC_POINT) {
+                    // Token is a number
                     temp.push(token);
                     while (expr.length && ((expr[0].charCodeAt(0) >= ZERO && expr[0].charCodeAt(0) <= NINE) || (expr[0].charCodeAt(0) >= CAP_A && expr[0].charCodeAt(0) <= CAP_Z) || expr[0].charCodeAt(0) === DEC_POINT)) {
                         temp.push(expr.shift());
@@ -124,6 +134,7 @@ var Epsilon;
                     this.valueStack.push(new Epsilon.ExpressionTree(temp.join("")));
                     valueToken = true;
                 } else if (token === "-" && !valueToken) {
+                    // Unary negative operator (negative sign)
                     while (expr.length && ((expr[0].charCodeAt(0) >= ZERO && expr[0].charCodeAt(0) <= NINE) || (expr[0].charCodeAt(0) >= CAP_A && expr[0].charCodeAt(0) <= CAP_Z) || expr[0].charCodeAt(0) === DEC_POINT)) {
                         temp.push(expr.shift());
                     }
@@ -140,34 +151,32 @@ var Epsilon;
             while (this.operatorStack.length) {
                 this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
             }
-        };
+        }
 
-        ExpressionParser.prototype.value = function () {
+        value(): number {
             return this.valueStack[0].evaluate();
-        };
+        }
 
-        ExpressionParser.prototype.evaluate = function (e) {
+        evaluate(e?: string): number {
             if (arguments.length) {
                 this.setExpression(e);
             }
             this.parse();
             return this.value();
-        };
+        }
 
-        ExpressionParser.prototype.setExpression = function (e) {
+        setExpression(e: string) {
             this.expression = e;
             this.operatorStack = [];
             this.valueStack = [];
-        };
-        return ExpressionParser;
-    })();
-    Epsilon.ExpressionParser = ExpressionParser;
-    function epsilon(els) {
-        var parser = new ExpressionParser(), elements = els || document.querySelectorAll("[data-formula]"), i;
-        for (i = 0; elements && i < elements.length; i++) {
-            elements[i].innerText = parser.evaluate(elements[i].getAttribute("data-formula")).toString();
         }
     }
-    Epsilon.epsilon = epsilon;
-})(Epsilon || (Epsilon = {}));
-//# sourceMappingURL=epsilon.js.map
+    export function epsilon(els?: NodeList) {
+        var parser = new ExpressionParser(),
+            elements = els || document.querySelectorAll("[data-formula]"),
+            i;
+        for (i = 0; elements && i < elements.length; i++) {
+            (<HTMLElement>elements[i]).innerText = parser.evaluate((<HTMLElement>elements[i]).getAttribute("data-formula")).toString();
+        }
+    }
+}
