@@ -12,12 +12,13 @@ Clone the repo:
     
 Install the grunt client:
 
-    npm install -g grunt-cli
+    npm install -g grunt-cli bower
     
 Go to the EpsilonJS folder and install dependencies:
 
     cd epsilonjs
     npm install
+    bower install
     
 Build:
 
