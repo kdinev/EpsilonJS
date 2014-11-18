@@ -1,14 +1,14 @@
 module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
+		pkg: grunt.file.readJSON("package.json"),
 		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+				banner: "/*! <%= pkg.name %> <%= grunt.template.today('yyyy-mm-dd') %> */\n"
 			},
 			build: {
 				files: {
-					'build/epsilon.min.js': ['src/epsilon.js']
+					"build/epsilon.min.js": ["src/epsilon.js"]
 				}
 			}
 		},
@@ -25,14 +25,14 @@ module.exports = function(grunt) {
 			]
 		},
 		qunit: {
-			all: ['test/*.html']
+			all: ["test/*.html"]
 		},
 		typescript: {
 			base: {
-				src: ['src/*.ts'],
+				src: ["src/*.ts"],
 				options: {
-					module: 'amd',
-					target: 'es5',
+					module: "amd",
+					target: "es5",
 					sourceMap: true,
 					declaration: true
 				}
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-typescript");
 
 	// Default task(s).
-	grunt.registerTask('default', ['typescript', 'jshint', 'qunit', 'uglify']);
+	grunt.registerTask("default", ["typescript", "jshint", "qunit", "uglify"]);
 	
 	// Custom task{s}.
 	grunt.registerTask("test", ["jshint", "qunit"]);
