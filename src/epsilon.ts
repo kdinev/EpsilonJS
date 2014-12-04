@@ -171,7 +171,7 @@ module Epsilon {
             this.valueStack = [];
         }
     }
-    export function epsilon(els?: NodeList) {
+    export function epsilon(els?: NodeList): void {
         var parser = new ExpressionParser(),
             elements = els || document.querySelectorAll("[data-formula]"),
             i;

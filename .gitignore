@@ -1,5 +1,6 @@
 #dev-resourse
 src/test.html
+src/epsilon.d.ts
 
 #packages
 node_modules/
