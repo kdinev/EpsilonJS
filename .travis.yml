@@ -7,7 +7,3 @@ before_script:
   - bower install
 script:
   - grunt default
-after_success:
-  - git add build/
-  - git commit -m "Build output"
-  - git push origin master
