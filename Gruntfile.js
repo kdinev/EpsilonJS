@@ -29,10 +29,10 @@ module.exports = function(grunt) {
 		},
 		typescript: {
 			base: {
-				src: ["src/*.ts"],
+				src: ["src/epsilon.ts"],
 				options: {
 					module: "amd",
-					target: "es5",
+					target: "es6",
 					sourceMap: true,
 					declaration: true
 				}
