@@ -1,4 +1,4 @@
-EpsilonJS[![Codacy Badge](https://www.codacy.com/project/badge/3d2d4cba93d94dc59cbbad849f7c9fbe)](https://www.codacy.com/public/kdinev/EpsilonJS)
+EpsilonJS[![Codacy Badge](https://www.codacy.com/project/badge/3d2d4cba93d94dc59cbbad849f7c9fbe)](https://www.codacy.com/public/kdinev/EpsilonJS)[![Build Status](https://travis-ci.org/kdinev/calculatorjs.svg?branch=master)](https://travis-ci.org/kdinev/calculatorjs.svg?branch=master)
 =========
 
 A JavaScript calculator and an expression parser.
