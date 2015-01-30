@@ -125,22 +125,22 @@ module Epsilon {
                     // remove the opening bracket
                     this.operatorStack.pop();
                     valueToken = true;
-                } else if ((token.charCodeAt(0) >= ZERO && token.charCodeAt(0) <= NINE) || (token.charCodeAt(0) >= CAP_A && token.charCodeAt(0) <= CAP_Z) || token.charCodeAt(0) === DEC_POINT) {
+                } else if (this.isValueFragment(token)) {
                     // Token is a number
                     temp.push(token);
-                    while (expr.length && ((expr[0].charCodeAt(0) >= ZERO && expr[0].charCodeAt(0) <= NINE) || (expr[0].charCodeAt(0) >= CAP_A && expr[0].charCodeAt(0) <= CAP_Z) || expr[0].charCodeAt(0) === DEC_POINT)) {
+                    while (expr.length && this.isValueFragment(expr[0])) {
                         temp.push(expr.shift());
                     }
                     this.valueStack.push(new Epsilon.ExpressionTree(temp.join("")));
                     valueToken = true;
                 } else if (token === "-" && !valueToken) {
                     // Unary negative operator (negative sign)
-                    while (expr.length && ((expr[0].charCodeAt(0) >= ZERO && expr[0].charCodeAt(0) <= NINE) || (expr[0].charCodeAt(0) >= CAP_A && expr[0].charCodeAt(0) <= CAP_Z) || expr[0].charCodeAt(0) === DEC_POINT)) {
+                    while (expr.length && this.isValueFragment(expr[0])) {
                         temp.push(expr.shift());
                     }
                     this.valueStack.push(new Epsilon.ExpressionTree(token, new Epsilon.ExpressionTree(temp.join(""))));
                     valueToken = true;
-                } else if (token === "+" || token === "-" || token === "*" || token === "/") {
+                } else if (this.isOperator(token)) {
                     while (this.operatorStack.length && ((this.operatorStack.top() === "*" || this.operatorStack.top() === "/") || ((token === "+" || token === "-") && (this.operatorStack.top() === "+" || this.operatorStack.top() === "-")))) {
                         this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
                     }
@@ -151,6 +151,14 @@ module Epsilon {
             while (this.operatorStack.length) {
                 this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
             }
+        }
+
+        isOperator(token?: string): boolean {
+            return token === "+" || token === "-" || token === "*" || token === "/";
+        }
+
+        isValueFragment(token?: string): boolean {
+            return (token.charCodeAt(0) >= ZERO && token.charCodeAt(0) <= NINE) || (token.charCodeAt(0) >= CAP_A && token.charCodeAt(0) <= CAP_Z) || token.charCodeAt(0) === DEC_POINT;
         }
 
         value(): number {

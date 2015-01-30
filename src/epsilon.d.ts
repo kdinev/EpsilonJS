@@ -20,6 +20,8 @@ declare module Epsilon {
         public valueStack: any[];
         constructor(expr?: string);
         public parse(): void;
+        public isOperator(token?: string): boolean;
+        public isValueFragment(token?: string): boolean;
         public value(): number;
         public evaluate(e?: string): number;
         public setExpression(e: string): void;
