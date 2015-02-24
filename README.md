@@ -69,7 +69,7 @@ Example:
         <li id="A3" data-formula="=A2+5"></li>
     </ul>
     <script type="text/javascript">
-        Epsilon.epsilon(document.getElementById("A3"));
+        Epsilon.epsilon([document.getElementById("A3")]);
     </script>
 
 The result will be:
