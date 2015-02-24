@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+	<script type="text/javascript" src="bower_components/epsilonjs/build/epsilon.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -93,12 +94,15 @@ parser.evaluate(); // Yeilds 0.2 as a number type
 &lt;/script&gt;
 </code></pre>
 
-<p>The result will be:</p>
+<p>The result is:</p>
 
 <ul>
-<li>10</li>
-<li>20</li>
+    <li id="A1">10</li> <!-- <li data-formula-ref="A1">10</li> -->
+    <li id="testformula" data-formula="=A1*2"></li>
 </ul>
+<script type="text/javascript">
+    Epsilon.epsilon([document.getElementById("testformula")]);
+</script>
 
 <p>Epsilon can evaluate only specific DOM elements as well and can be invoked at any point for those elements. If the reference elements contain formulas, then their formulas will be evaluated as part of the requested element's formula but their DOM values will not be changed.</p>
 
@@ -110,18 +114,20 @@ parser.evaluate(); // Yeilds 0.2 as a number type
     &lt;li id="A3" data-formula="=A2+5"&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;script type="text/javascript"&gt;
-    Epsilon.epsilon(document.getElementById("A3"));
+    Epsilon.epsilon([document.getElementById("A3")]);
 &lt;/script&gt;
 </code></pre>
 
-<p>The result will be:</p>
+<p>The result is:</p>
 
 <ul>
-<li>10</li>
-<li>
-</li>
-<li>25</li>
+    <li id="A1">10</li> <!-- <li data-formula-ref="A1">10</li> -->
+    <li id="A2" data-formula="=A1*2"></li>
+    <li id="A3" data-formula="=A2+5"></li>
 </ul>
+<script type="text/javascript">
+    Epsilon.epsilon([document.getElementById("A3")]);
+</script>
 
 <p>There is also a jQuery UI epsilon calculator widget provided by <a href="https://github.com/kdinev/calculatorjs">https://github.com/kdinev/calculatorjs</a>. This widget was created to test the epsilon expression parser. The calculator widget is dependent on jQuery and jQuery UI. In order to use it:</p>
 
