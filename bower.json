@@ -26,7 +26,7 @@
 	"demos",
 	"bower.json",
 	"package.json",
-	"gruntfile.js"
+	"Gruntfile.js"
   ],
   "devDependencies": {
     "jquery": "~2.1.1",
