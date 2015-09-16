@@ -93,9 +93,11 @@ module Epsilon {
             if (el && el.getAttribute("data-formula")) {
                 parser = new ExpressionParser(el.getAttribute("data-formula"));
                 val = parser.evaluate();
+            } else if ((<HTMLInputElement>el).value) {
+                val = (<HTMLInputElement>el).value;
             } else if (el) {
-                val = el.innerText;
-            }
+				val = el.innerText;
+			}
             return parseFloat(val);
         }
     }

@@ -85,6 +85,8 @@ var Epsilon;
             if (el && el.getAttribute("data-formula")) {
                 parser = new ExpressionParser(el.getAttribute("data-formula"));
                 val = parser.evaluate();
+            } else if (el.value) {
+                val = el.value;
             } else if (el) {
                 val = el.innerText;
             }

@@ -109,6 +109,13 @@ TestModule.renderDom = function () {
 	var html = "<div id='A1'>1</div><div id='A2' data-formula='=A1*3'></div><div id='A3' data-formula='=A2+20'></div><div id='A4' data-formula='=A5+-1.2'></div><div id='A5' data-formula='=A3-1'></div>";
 	container.innerHTML = html;
 };
+TestModule.renderDomWithInputs = function () {
+	var container = document.createElement("div");
+	container.id = "testContainer";
+	document.body.appendChild(container);
+	var html = "<input id='A1' value='1' /><div id='A2' data-formula='=A1*3'></div><div id='A3' data-formula='=A2+20'></div><div id='A4' data-formula='=A5+-1.2'></div><div id='A5' data-formula='=A3-1'></div>";
+	container.innerHTML = html;
+};
 
 module("DOM reference parser", {
 	setup: function () {
@@ -144,4 +151,22 @@ test("DOM references and chained formulas - restricted subset.", function () {
 	equal(document.getElementById("A3").innerText, "23", "The DOM element with formula =A2+20 was not evaluated correctly.");
 	equal(document.getElementById("A4").innerText, "", "The DOM element with formula =A5+-1.2 was evaluated and it should not be.");
 	equal(document.getElementById("A5").innerText, "", "The DOM element with formula =A3-1 was evaluated and it should not be.");
+});
+
+module("DOM reference parser - input elements", {
+	setup: function () {
+		TestModule.renderDomWithInputs();
+		Epsilon.epsilon();
+	},
+	teardown: function () {
+		var node = document.getElementById("testContainer");
+		node.parentNode.removeChild(node);
+	}
+});
+
+test("DOM references and chained formulas - restricted subset.", function () {
+	equal(document.getElementById("A2").innerText, "3", "The DOM element with formula =A1*3 was not evaluated correctly.");
+	equal(document.getElementById("A3").innerText, "23", "The DOM element with formula =A2+20 was not evaluated correctly.");
+	equal(document.getElementById("A4").innerText, "20.8", "The DOM element with formula =A5+-1.2 was not evaluated correctly.");
+	equal(document.getElementById("A5").innerText, "22", "The DOM element with formula =A3-1 was not evaluated correctly.");
 });
