@@ -81,16 +81,16 @@ var Epsilon;
         };
 
         ExpressionTree.prototype.getElementValue = function (el) {
-            var val, parser;
+            var val = 0, parser;
             if (el && el.getAttribute("data-formula")) {
                 parser = new ExpressionParser(el.getAttribute("data-formula"));
                 val = parser.evaluate();
-            } else if (el.value) {
-                val = el.value;
+            } else if (el && el.value) {
+                val = parseFloat(el.value) || 0;
             } else if (el) {
-                val = el.innerText;
+                val = parseFloat(el.innerText) || 0;
             }
-            return parseFloat(val);
+            return val;
         };
         return ExpressionTree;
     })();

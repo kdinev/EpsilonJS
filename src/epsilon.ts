@@ -89,16 +89,16 @@ module Epsilon {
         }
 
         getElementValue(el: HTMLElement): number {
-            var val, parser;
+            var val = 0, parser;
             if (el && el.getAttribute("data-formula")) {
                 parser = new ExpressionParser(el.getAttribute("data-formula"));
                 val = parser.evaluate();
-            } else if ((<HTMLInputElement>el).value) {
-                val = (<HTMLInputElement>el).value;
+            } else if (el && (<HTMLInputElement>el).value) {
+                val = parseFloat((<HTMLInputElement>el).value) || 0;
             } else if (el) {
-				val = el.innerText;
+				val = parseFloat(el.innerText) || 0;
 			}
-            return parseFloat(val);
+            return val;
         }
     }
     export class ExpressionParser {
