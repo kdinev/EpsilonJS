@@ -89,14 +89,15 @@ module Epsilon {
         }
 
         getElementValue(el: HTMLElement): number {
-            var val = 0, parser;
+            var val = 0, parser, text;
             if (el && el.getAttribute("data-formula")) {
                 parser = new ExpressionParser(el.getAttribute("data-formula"));
                 val = parser.evaluate();
             } else if (el && (<HTMLInputElement>el).value) {
                 val = parseFloat((<HTMLInputElement>el).value) || 0;
             } else if (el) {
-				val = parseFloat(el.innerText) || 0;
+				text = el.textContent || el.innerText;
+				val = parseFloat(text) || 0;
 			}
             return val;
         }
@@ -184,9 +185,15 @@ module Epsilon {
     export function epsilon(els?: NodeList): void {
         var parser = new ExpressionParser(),
             elements = els || document.querySelectorAll("[data-formula]"),
-            i;
+            i, 
+			value;
         for (i = 0; elements && i < elements.length; i++) {
-            (<HTMLElement>elements[i]).innerText = parser.evaluate((<HTMLElement>elements[i]).getAttribute("data-formula")).toString();
+			value = parser.evaluate((<HTMLElement>elements[i]).getAttribute("data-formula")).toString();
+			if ((<HTMLElement>elements[i]).textContent) {
+				(<HTMLElement>elements[i]).textContent = value;
+			} else {
+				(<HTMLElement>elements[i]).innerText = value;
+			}
         }
     }
 }

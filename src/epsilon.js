@@ -81,14 +81,15 @@ var Epsilon;
         };
 
         ExpressionTree.prototype.getElementValue = function (el) {
-            var val = 0, parser;
+            var val = 0, parser, text;
             if (el && el.getAttribute("data-formula")) {
                 parser = new ExpressionParser(el.getAttribute("data-formula"));
                 val = parser.evaluate();
             } else if (el && el.value) {
                 val = parseFloat(el.value) || 0;
             } else if (el) {
-                val = parseFloat(el.innerText) || 0;
+                text = el.textContent || el.innerText;
+                val = parseFloat(text) || 0;
             }
             return val;
         };
@@ -173,9 +174,14 @@ var Epsilon;
     })();
     Epsilon.ExpressionParser = ExpressionParser;
     function epsilon(els) {
-        var parser = new ExpressionParser(), elements = els || document.querySelectorAll("[data-formula]"), i;
+        var parser = new ExpressionParser(), elements = els || document.querySelectorAll("[data-formula]"), i, value;
         for (i = 0; elements && i < elements.length; i++) {
-            elements[i].innerText = parser.evaluate(elements[i].getAttribute("data-formula")).toString();
+            value = parser.evaluate(elements[i].getAttribute("data-formula")).toString();
+            if (elements[i].textContent) {
+                elements[i].textContent = value;
+            } else {
+                elements[i].innerText = value;
+            }
         }
     }
     Epsilon.epsilon = epsilon;
