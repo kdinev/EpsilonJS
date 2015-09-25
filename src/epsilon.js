@@ -177,7 +177,7 @@ var Epsilon;
         var parser = new ExpressionParser(), elements = els || document.querySelectorAll("[data-formula]"), i, value;
         for (i = 0; elements && i < elements.length; i++) {
             value = parser.evaluate(elements[i].getAttribute("data-formula")).toString();
-            if (elements[i].textContent) {
+            if (elements[i].textContent !== undefined) {
                 elements[i].textContent = value;
             } else {
                 elements[i].innerText = value;

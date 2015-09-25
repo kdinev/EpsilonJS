@@ -189,7 +189,7 @@ module Epsilon {
 			value;
         for (i = 0; elements && i < elements.length; i++) {
 			value = parser.evaluate((<HTMLElement>elements[i]).getAttribute("data-formula")).toString();
-			if ((<HTMLElement>elements[i]).textContent) {
+			if ((<HTMLElement>elements[i]).textContent !== undefined) {
 				(<HTMLElement>elements[i]).textContent = value;
 			} else {
 				(<HTMLElement>elements[i]).innerText = value;
