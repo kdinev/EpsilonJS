@@ -1,5 +1,6 @@
-EpsilonJS[![Codacy Badge](https://www.codacy.com/project/badge/3d2d4cba93d94dc59cbbad849f7c9fbe)](https://www.codacy.com/public/kdinev/EpsilonJS)[![Build Status](https://travis-ci.org/kdinev/EpsilonJS.svg?branch=master)](https://travis-ci.org/kdinev/EpsilonJS)
+EpsilonJS
 =========
+[![Codacy Badge](https://www.codacy.com/project/badge/3d2d4cba93d94dc59cbbad849f7c9fbe)](https://www.codacy.com/public/kdinev/EpsilonJS) [![Build Status](https://travis-ci.org/kdinev/EpsilonJS.svg?branch=master)](https://travis-ci.org/kdinev/EpsilonJS)
 
 EpsilonJS us a JavaScript calculator and an expression parser. The framework allows for parsing mathematical expressions from string or from DOM attributes. It also allows evaluation of mathematical expressions as part of DOM attributes which reference other DOM elements.
 
