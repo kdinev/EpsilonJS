@@ -62,7 +62,7 @@ test("Basic expressions", function () {
 	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
 });
 
-test("Operator precedence.", function () {
+test("Operator precedence", function () {
 	var expression = "1+2*10-6",
 		answer = 15,
 		e = new Epsilon.ExpressionParser(expression);
@@ -97,6 +97,17 @@ test("Operator precedence.", function () {
 	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
 	expression = "-0.1/(2.26+8)*2.1";
 	answer = -0.020467836257309944;
+	e.setExpression(expression);
+	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
+});
+
+test("Expressions with white spaces", function () {
+	var expression = "1 + 2 * 10 - 6",
+		answer = 15,
+		e = new Epsilon.ExpressionParser(expression);
+	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
+	expression = "-0.1 - (2.26 + 8) * 2.1";
+	answer = -21.646;
 	e.setExpression(expression);
 	equal(e.evaluate(), answer, "The expression " + expression + " did not yield " + answer);
 });
