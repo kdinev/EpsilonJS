@@ -182,11 +182,14 @@ module Epsilon {
             this.valueStack = [];
         }
     }
-    export function epsilon(els?: NodeList): void {
+    export function epsilon(els?: any): void {
         var parser = new ExpressionParser(),
             elements = els || document.querySelectorAll("[data-formula]"),
             i, 
-			value;
+            value;
+        if (elements.length === undefined) {
+            elements = new Array(elements);
+        }
         for (i = 0; elements && i < elements.length; i++) {
 			value = parser.evaluate((<HTMLElement>elements[i]).getAttribute("data-formula")).toString();
 			if ((<HTMLElement>elements[i]).textContent !== undefined) {

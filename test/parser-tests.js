@@ -164,6 +164,24 @@ test("DOM references and chained formulas - restricted subset.", function () {
 	equal(document.getElementById("A5").innerText, "", "The DOM element with formula =A3-1 was evaluated and it should not be.");
 });
 
+module("DOM reference parser - restricted subset single element", {
+	setup: function () {
+		TestModule.renderDom();
+		Epsilon.epsilon(document.getElementById("A3"));
+	},
+	teardown: function () {
+		var node = document.getElementById("testContainer");
+		node.parentNode.removeChild(node);
+	}
+});
+
+test("DOM references and chained formulas - restricted subset.", function () {
+	equal(document.getElementById("A2").innerText, "", "The DOM element with formula =A1*3 was not evaluated correctly.");
+	equal(document.getElementById("A3").innerText, "23", "The DOM element with formula =A2+20 was not evaluated correctly.");
+	equal(document.getElementById("A4").innerText, "", "The DOM element with formula =A5+-1.2 was evaluated and it should not be.");
+	equal(document.getElementById("A5").innerText, "", "The DOM element with formula =A3-1 was evaluated and it should not be.");
+});
+
 module("DOM reference parser - input elements", {
 	setup: function () {
 		TestModule.renderDomWithInputs();

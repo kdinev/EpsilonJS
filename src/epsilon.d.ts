@@ -26,5 +26,5 @@ declare module Epsilon {
         public evaluate(e?: string): number;
         public setExpression(e: string): void;
     }
-    function epsilon(els?: NodeList): void;
+    function epsilon(els?: any): void;
 }
