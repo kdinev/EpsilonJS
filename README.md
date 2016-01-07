@@ -4,6 +4,10 @@ EpsilonJS
 
 EpsilonJS us a JavaScript calculator and an expression parser. The framework allows for parsing mathematical expressions from string or from DOM attributes. It also allows evaluation of mathematical expressions as part of DOM attributes which reference other DOM elements.
 
+You can get EpsilonJS through Bower:
+
+    bower install epsilonjs
+
 How to build EpsilonJS
 =========
 
