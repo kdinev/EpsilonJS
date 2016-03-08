@@ -3,28 +3,31 @@ interface Array<T> {
 }
 declare module Epsilon {
     class ExpressionTree {
-        public pointer: any;
-        public left: any;
-        public right: any;
-        public operator: any;
-        constructor(token: any, left?: ExpressionTree, right?: ExpressionTree);
-        public evaluate(): number;
-        public value(): number;
-        public getDomVal(): number;
-        public getElementValue(el: HTMLElement): number;
+        pointer: any;
+        left: ExpressionTree;
+        right: ExpressionTree;
+        operator: string;
+        constructor(token: any);
+        constructor(token: any, left: ExpressionTree);
+        constructor(token: any, left?: ExpressionTree);
+        constructor(token: any, left: ExpressionTree, right?: ExpressionTree);
+        evaluate(): number;
+        value(): number;
+        getDomVal(): number;
+        getElementValue(el: HTMLElement): number;
     }
     class ExpressionParser {
-        public expr: string;
-        public expression: any;
-        public operatorStack: any[];
-        public valueStack: any[];
+        expr: string;
+        expression: string;
+        operatorStack: string[];
+        valueStack: ExpressionTree[];
         constructor(expr?: string);
-        public parse(): void;
-        public isOperator(token?: string): boolean;
-        public isValueFragment(token?: string): boolean;
-        public value(): number;
-        public evaluate(e?: string): number;
-        public setExpression(e: string): void;
+        parse(): void;
+        isOperator(token?: string): boolean;
+        isValueFragment(token?: string): boolean;
+        value(): number;
+        evaluate(e?: string): number;
+        setExpression(e: string): void;
     }
     function epsilon(els?: any): void;
 }

@@ -1,11 +1,13 @@
 Array.prototype.top = function () {
     return this[this.length - 1];
 };
-
 var Epsilon;
 (function (Epsilon) {
-    var ZERO = 48, NINE = 57, CAP_A = 65, CAP_Z = 90, DEC_POINT = 46;
-
+    var ZERO = 48;
+    var NINE = 57;
+    var CAP_A = 65;
+    var CAP_Z = 90;
+    var DEC_POINT = 46;
     var ExpressionTree = (function () {
         function ExpressionTree(token, left, right) {
             this.pointer = null;
@@ -59,19 +61,18 @@ var Epsilon;
             }
             return this.value();
         };
-
         ExpressionTree.prototype.value = function () {
             if (typeof this.pointer === "number") {
                 return this.pointer;
             }
             if (this.pointer.charCodeAt(0) >= ZERO && this.pointer.charCodeAt(0) <= NINE || this.pointer.charCodeAt(0) === DEC_POINT) {
                 this.pointer = parseFloat(this.pointer);
-            } else if (this.pointer.charCodeAt(0) >= CAP_A && this.pointer.charCodeAt(0) <= CAP_Z) {
+            }
+            else if (this.pointer.charCodeAt(0) >= CAP_A && this.pointer.charCodeAt(0) <= CAP_Z) {
                 this.pointer = this.getDomVal();
             }
             return this.pointer;
         };
-
         ExpressionTree.prototype.getDomVal = function () {
             var el = document.getElementById(this.pointer);
             if (!el) {
@@ -79,15 +80,16 @@ var Epsilon;
             }
             return this.getElementValue(el);
         };
-
         ExpressionTree.prototype.getElementValue = function (el) {
             var val = 0, parser, text;
             if (el && el.getAttribute("data-formula")) {
                 parser = new ExpressionParser(el.getAttribute("data-formula"));
                 val = parser.evaluate();
-            } else if (el && el.value) {
+            }
+            else if (el && el.value) {
                 val = parseFloat(el.value) || 0;
-            } else if (el) {
+            }
+            else if (el) {
                 text = el.textContent || el.innerText;
                 val = parseFloat(text) || 0;
             }
@@ -112,51 +114,54 @@ var Epsilon;
                 if (token === "(") {
                     this.operatorStack.push("(");
                     valueToken = false;
-                } else if (token === ")") {
+                }
+                else if (token === ")") {
                     while (this.operatorStack.top() !== "(") {
-                        this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
+                        // Push a new node on the value stack
+                        this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
                     }
-
+                    // remove the opening bracket
                     this.operatorStack.pop();
                     valueToken = true;
-                } else if (this.isValueFragment(token)) {
+                }
+                else if (this.isValueFragment(token)) {
+                    // Token is a number
                     temp.push(token);
                     while (expr.length && this.isValueFragment(expr[0])) {
                         temp.push(expr.shift());
                     }
-                    this.valueStack.push(new Epsilon.ExpressionTree(temp.join("")));
+                    this.valueStack.push(new ExpressionTree(temp.join("")));
                     valueToken = true;
-                } else if (token === "-" && !valueToken) {
+                }
+                else if (token === "-" && !valueToken) {
+                    // Unary negative operator (negative sign)
                     while (expr.length && this.isValueFragment(expr[0])) {
                         temp.push(expr.shift());
                     }
-                    this.valueStack.push(new Epsilon.ExpressionTree(token, new Epsilon.ExpressionTree(temp.join(""))));
+                    this.valueStack.push(new ExpressionTree(token, new ExpressionTree(temp.join(""))));
                     valueToken = true;
-                } else if (this.isOperator(token)) {
+                }
+                else if (this.isOperator(token)) {
                     while (this.operatorStack.length && ((this.operatorStack.top() === "*" || this.operatorStack.top() === "/") || ((token === "+" || token === "-") && (this.operatorStack.top() === "+" || this.operatorStack.top() === "-")))) {
-                        this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
+                        this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
                     }
                     this.operatorStack.push(token);
                     valueToken = false;
                 }
             }
             while (this.operatorStack.length) {
-                this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
+                this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
             }
         };
-
         ExpressionParser.prototype.isOperator = function (token) {
             return token === "+" || token === "-" || token === "*" || token === "/";
         };
-
         ExpressionParser.prototype.isValueFragment = function (token) {
             return (token.charCodeAt(0) >= ZERO && token.charCodeAt(0) <= NINE) || (token.charCodeAt(0) >= CAP_A && token.charCodeAt(0) <= CAP_Z) || token.charCodeAt(0) === DEC_POINT;
         };
-
         ExpressionParser.prototype.value = function () {
             return this.valueStack[0].evaluate();
         };
-
         ExpressionParser.prototype.evaluate = function (e) {
             if (arguments.length) {
                 this.setExpression(e);
@@ -164,7 +169,6 @@ var Epsilon;
             this.parse();
             return this.value();
         };
-
         ExpressionParser.prototype.setExpression = function (e) {
             this.expression = e;
             this.operatorStack = [];
@@ -182,7 +186,8 @@ var Epsilon;
             value = parser.evaluate(elements[i].getAttribute("data-formula")).toString();
             if (elements[i].textContent !== undefined) {
                 elements[i].textContent = value;
-            } else {
+            }
+            else {
                 elements[i].innerText = value;
             }
         }

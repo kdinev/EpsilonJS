@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 				src: ["src/epsilon.ts"],
 				options: {
 					module: "amd",
-					target: "es6",
+					target: "es5",
 					sourceMap: true,
 					declaration: true
 				}

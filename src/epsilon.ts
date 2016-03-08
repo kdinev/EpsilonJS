@@ -5,19 +5,22 @@ interface Array<T> {
 Array.prototype.top = function () {
 	return this[this.length - 1];
 };
-
 module Epsilon {
-    var ZERO = 48,
-        NINE = 57,
-        CAP_A = 65,
-        CAP_Z = 90,
-        DEC_POINT = 46;
+	const ZERO = 48;
+	const NINE = 57;
+	const CAP_A = 65;
+	const CAP_Z = 90;
+	const DEC_POINT = 46;
 
     export class ExpressionTree {
-        pointer = null;
-        left = null;
-        right = null;
-        operator = null;
+        pointer: any = null;
+        left: ExpressionTree = null;
+        right: ExpressionTree = null;
+        operator: string = null;
+        constructor(token: any);
+        constructor(token: any, left: ExpressionTree);
+        constructor(token: any, left?: ExpressionTree);
+        constructor(token: any, left: ExpressionTree, right?: ExpressionTree);
         constructor(token: any, left?: ExpressionTree, right?: ExpressionTree) {
             switch (arguments.length) {
                 case 1:
@@ -103,9 +106,9 @@ module Epsilon {
         }
     }
     export class ExpressionParser {
-        expression = null;
-        operatorStack = [];
-        valueStack = [];
+        expression: string = null;
+        operatorStack: string[] = [];
+        valueStack: ExpressionTree[] = [];
         constructor(public expr?: string) {
             this.expression = expr;
         }
@@ -123,7 +126,7 @@ module Epsilon {
                 } else if (token === ")") {
                     while (this.operatorStack.top() !== "(") {
                         // Push a new node on the value stack
-                        this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
+                        this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
                     }
                     // remove the opening bracket
                     this.operatorStack.pop();
@@ -134,25 +137,25 @@ module Epsilon {
                     while (expr.length && this.isValueFragment(expr[0])) {
                         temp.push(expr.shift());
                     }
-                    this.valueStack.push(new Epsilon.ExpressionTree(temp.join("")));
+                    this.valueStack.push(new ExpressionTree(temp.join("")));
                     valueToken = true;
                 } else if (token === "-" && !valueToken) {
                     // Unary negative operator (negative sign)
                     while (expr.length && this.isValueFragment(expr[0])) {
                         temp.push(expr.shift());
                     }
-                    this.valueStack.push(new Epsilon.ExpressionTree(token, new Epsilon.ExpressionTree(temp.join(""))));
+                    this.valueStack.push(new ExpressionTree(token, new ExpressionTree(temp.join(""))));
                     valueToken = true;
                 } else if (this.isOperator(token)) {
                     while (this.operatorStack.length && ((this.operatorStack.top() === "*" || this.operatorStack.top() === "/") || ((token === "+" || token === "-") && (this.operatorStack.top() === "+" || this.operatorStack.top() === "-")))) {
-                        this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
+                        this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
                     }
                     this.operatorStack.push(token);
                     valueToken = false;
                 }
             }
             while (this.operatorStack.length) {
-                this.valueStack.push(new Epsilon.ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
+                this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
             }
         }
 
