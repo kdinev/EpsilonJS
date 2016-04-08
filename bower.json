@@ -1,11 +1,11 @@
 {
-  "name": "EpsilonJS",
+  "name": "epsilonjs",
   "homepage": "https://github.com/kdinev/EpsilonJS",
   "authors": [
     "kdinev <kdinev@mail.bw.edu>"
   ],
   "description": "Calculator library for basic and complex expressions including DOM reference members.",
-  "main": "build/epsilon.min.js",
+  "main": "src/epsilon.js",
   "repository": {
 	"type": "git",
 	"url": "git://github.com/kdinev/EpsilonJS.git"
