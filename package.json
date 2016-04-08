@@ -21,5 +21,9 @@
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
     "grunt-typescript": ""
+  },
+  "scripts": {
+	"preinstall": "npm install -g grunt-cli bower",
+    "postinstall": "bower install"
   }
 }
