@@ -24,6 +24,7 @@
   },
   "scripts": {
 	"preinstall": "npm install -g grunt-cli bower",
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+	"test": "grunt default"
   }
 }
