@@ -3,5 +3,6 @@ node_js:
   - "0.12.0"
 before_script:
   - npm install -g grunt-cli bower
+  - bower install
 script:
   - grunt default
