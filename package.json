@@ -23,7 +23,7 @@
     "grunt-typescript": ""
   },
   "scripts": {
-	"preinstall": "npm install -g npm@latest grunt-cli bower",
+	"preinstall": "npm install -g grunt-cli bower",
     "postinstall": "bower install",
 	"test": "grunt default"
   }
