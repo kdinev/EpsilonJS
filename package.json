@@ -21,5 +21,8 @@
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
     "grunt-typescript": ""
+  },
+  "scripts": {
+    "postinstall": "bower install"
   }
 }
