@@ -15,15 +15,10 @@ Clone the repo:
 
     git clone https://github.com/kdinev/EpsilonJS.git
     
-Install the grunt client:
-
-    npm install -g grunt-cli bower
-    
 Go to the EpsilonJS folder and install dependencies:
 
     cd epsilonjs
     npm install
-    bower install
     
 Build:
 
