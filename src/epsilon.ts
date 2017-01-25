@@ -91,6 +91,26 @@ module Epsilon {
             return this.getElementValue(el);
         }
 
+        getRange(): number[] {
+            var left = this.left.pointer, right = this.right.pointer, i, list = [];
+            if (typeof left === "string") {
+                if (left.charCodeAt(0) >= ZERO && left.charCodeAt(0) <= NINE || left.charCodeAt(0) === DEC_POINT) {
+                    left = parseFloat(left);
+                }
+            }
+            if (typeof right === "string") {
+                if (right.charCodeAt(0) >= ZERO && right.charCodeAt(0) <= NINE || right.charCodeAt(0) === DEC_POINT) {
+                    right = parseFloat(right);
+                }
+            }
+            if (typeof left === "number" && typeof right === "number") {
+                for (i = left; i <= right; i++) {
+                    list.push(i);
+                }
+            }
+            return list;
+        }
+
         getElementValue(el: HTMLElement): number {
             var val = 0, parser, text;
             if (el && el.getAttribute("data-formula")) {
@@ -112,9 +132,18 @@ module Epsilon {
         constructor(public expr?: string) {
             this.expression = expr;
         }
-        parse() {
-            var expr = this.expression.split(""),
-                token,
+        parse(): void {
+            this.transformExpr();
+            this.parseExpr(this.expression.split(""));
+            this.initValueStack();
+        }
+
+        transformExpr(): void {
+            
+        }
+
+        parseExpr(expr: string[]): void {
+            var token,
                 temp,
                 valueToken = false;
             while (expr.length) {
@@ -154,6 +183,9 @@ module Epsilon {
                     valueToken = false;
                 }
             }
+        }
+
+        initValueStack(): void {
             while (this.operatorStack.length) {
                 this.valueStack.push(new ExpressionTree(this.operatorStack.pop(), this.valueStack.pop(), this.valueStack.pop()));
             }
@@ -179,7 +211,7 @@ module Epsilon {
             return this.value();
         }
 
-        setExpression(e: string) {
+        setExpression(e: string): void {
             this.expression = e;
             this.operatorStack = [];
             this.valueStack = [];
@@ -203,3 +235,4 @@ module Epsilon {
         }
     }
 }
+
