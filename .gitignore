@@ -6,4 +6,4 @@ node_modules/
 bower_components/
 
 #buildzone
-#build/
+build/
