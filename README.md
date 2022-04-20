@@ -15,15 +15,10 @@ Clone the repo:
 
     git clone https://github.com/kdinev/EpsilonJS.git
     
-Install the grunt client:
-
-    npm install -g grunt-cli bower
-    
 Go to the EpsilonJS folder and install dependencies:
 
     cd epsilonjs
     npm install
-    bower install
     
 Build:
 
@@ -74,7 +69,7 @@ Example:
         <li id="A3" data-formula="=A2+5"></li>
     </ul>
     <script type="text/javascript">
-        Epsilon.epsilon([document.getElementById("A3")]);
+        Epsilon.epsilon(document.getElementById("A3"));
     </script>
 
 The result will be:
@@ -83,6 +78,8 @@ The result will be:
  * 
  * 25
 
+
+======
 There is also a jQuery UI epsilon calculator widget provided by [https://github.com/kdinev/calculatorjs](https://github.com/kdinev/calculatorjs). This widget was created to test the epsilon expression parser. The calculator widget is dependent on jQuery and jQuery UI. In order to use it:
     
     <div id="calculator"></div>

@@ -3,23 +3,29 @@
   "title": "EpsilonJS",
   "description": "Calculator library for basic and complex expressions including DOM reference members.",
   "version": "1.0.2",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/kdinev/EpsilonJS.git"
   },
   "main": "src/epsilon.js",
-  "engine": "node >= 0.10.5",
+  "engine": "node >= 0.12.0",
   "keywords": [
     "calculator",
     "expression",
     "parser"
   ],
   "devDependencies": {
-    "grunt": "",
+	"grunt": "",
     "grunt-contrib-jshint": "",
     "grunt-contrib-qunit": "",
     "grunt-contrib-uglify": "",
     "grunt-contrib-watch": "",
     "grunt-typescript": ""
+  },
+  "scripts": {
+	"preinstall": "npm install -g grunt-cli bower",
+    "postinstall": "bower install",
+	"test": "grunt default"
   }
 }

@@ -1,12 +1,15 @@
 {
-  "name": "EpsilonJS",
-  "version": "1.0.0",
+  "name": "epsilonjs",
   "homepage": "https://github.com/kdinev/EpsilonJS",
   "authors": [
     "kdinev <kdinev@mail.bw.edu>"
   ],
   "description": "Calculator library for basic and complex expressions including DOM reference members.",
-  "main": "build/epsilon.min.js",
+  "main": "src/epsilon.js",
+  "repository": {
+	"type": "git",
+	"url": "git://github.com/kdinev/EpsilonJS.git"
+  },
   "moduleType": [
     "globals"
   ],
@@ -29,7 +32,7 @@
 	"Gruntfile.js"
   ],
   "devDependencies": {
-    "jquery": "~2.1.1",
-    "qunit": "~1.14.0"
+    "jquery": "~2.2.3",
+    "qunit": "~1.23.0"
   }
 }

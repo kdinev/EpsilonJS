@@ -1,8 +1,5 @@
 language: node_js
 node_js:
-  - "0.10.30"
-before_script:
-  - npm install -g grunt-cli bower
-  - bower install
+  - "5"
 script:
-  - grunt default
+  - npm test
